@@ -10,17 +10,17 @@ def _scan(ip,arg):
 
 def tcp_services(ip):
     res=_scan(ip,'-sV -O -Pn')
-    print(style.bold(style.blue('[✓] UP TIME')))
-    # print(style.bold(style.blue('[==============================]')))
-    print(style.bold(style.cyan('[i] Last Boot : ' + str(res['uptime']['lastboot']))))
-    print(style.bold(style.cyan('[i] Up Time   : ' + str(int(int(res['uptime']['seconds']) / (24 * 3600))) + ' Days')))
+    print(('[✓] UP TIME'))
+    # print(('[==============================]'))
+    print(('[i] Last Boot : ' + str(res['uptime']['lastboot'])))
+    print(('[i] Up Time   : ' + str(int(int(res['uptime']['seconds']) / (24 * 3600))) + ' Days'))
 
-    print(style.bold(style.blue('[✓] OPEN TCP PORTS AND SERVICES ')))
+    print(('[✓] OPEN TCP PORTS AND SERVICES '))
     if 'tcp' not in res.keys():
         exit()
     else:
         res = res['tcp']
-        print(style.bold(style.cyan('PORT,SERVICE,INFORMATION')))
+        print(('PORT,SERVICE,INFORMATION'))
         for i in res.keys():
             try:
                 port = str(i)
@@ -44,17 +44,17 @@ def tcp_services(ip):
                 version = ''
 
             if state.lower() == 'open':
-                print(style.bold(style.green(port + ',' + name + ',' + product + ' ' + version)))
+                print((port + ',' + name + ',' + product + ' ' + version))
 
 def udp_services(ip):
     res=_scan(ip,'-sU')
     print(res)
-    print(style.bold(style.blue('[✓] OPEN UDP PORTS AND SERVICES ')))
+    print(('[✓] OPEN UDP PORTS AND SERVICES '))
     if 'udp' not in res.keys():
         exit()
     else:
         res = res['udp']
-        print(style.bold(style.cyan('PORT,SERVICE,INFORMATION')))
+        print(('PORT,SERVICE,INFORMATION'))
         for i in res.keys():
             try:
                 port = str(i)
@@ -78,7 +78,7 @@ def udp_services(ip):
                 version = ''
 
             if state.lower() == 'open':
-                print(style.bold(style.green(port + ',' + name + ',' + product + ' ' + version)))
+                print((port + ',' + name + ',' + product + ' ' + version))
 
 
 
