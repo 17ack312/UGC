@@ -208,4 +208,4 @@ if flag==3:
     try:
         mac_lookup(IN)
     except:
-        None
+        print(None)
