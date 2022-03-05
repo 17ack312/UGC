@@ -16,9 +16,23 @@ def _scan(ip,arg):
 
 def tcp_services(ip):
     res=_scan(ip,'-sV -O -Pn')
+
     print('[✓] UP TIME')
-    print('[i] Last Boot : ' + str(res['uptime']['lastboot']))
-    print('[i] Up Time   : ' + str(int(int(res['uptime']['seconds']) / (24 * 3600))) + ' Days')
+    try:
+        print('[i] Last Boot : ' + str(res['uptime']['lastboot']))
+    except:
+        pass
+    try:
+        print('[i] Up Time   : ' + str(int(int(res['uptime']['seconds']) / (24 * 3600))) + ' Days')
+    except:
+        pass
+    try:
+        for i in (res['osmatch']):
+            if int(i['accuracy']) == 100:
+                print('[i] os :', i['name'])
+    except:
+        pass
+
     print('[✓] OPEN TCP PORTS AND SERVICES ')
     if 'tcp' not in res.keys():
         exit()
@@ -89,3 +103,4 @@ if flag==1:
     tcp_services(ip)
 if flag==2:
     udp_services(ip)
+
