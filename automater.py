@@ -1,6 +1,27 @@
-import sys,os,requests
+import subprocess
+import sys,os,subprocess,requests,shutil
 
-path='C:/Users/Rajdeep Basu/Desktop/UGC/module/'
+path=sys.argv[3]
+mod = path + 'module/'
+out = mod.replace('module', 'out')
 
-os.system('git clone https://github.com/17ack312/Automater.git')
+ip=sys.argv[1]
+python=sys.argv[2]
 
+def _rmdir(path):
+    if (os.path.exists(path)):
+        shutil.rmtree(path)
+
+try:
+    _rmdir(mod+'Automater')
+    os.system('git clone https://github.com/17ack312/Automater.git')
+except:
+    if not os.path.exists(mod+'Automater'):
+        os.system('git clone https://github.com/17ack312/Automater.git')
+
+res=subprocess.check_output(python+' "'+mod+'Automater/Automater.py" '+ip,shell=True).decode()
+
+if 'Unfortunately there is neither a tekdefense.xml' not in res:
+    print(res)
+else:
+    print(None)
