@@ -19,7 +19,7 @@ except:
     if not os.path.exists(mod+'Automater'):
         os.system('git clone https://github.com/17ack312/Automater.git')
 
-res=subprocess.check_output(python+' "'+mod+'Automater/Automater.py" '+ip,shell=True).decode()
+res=os.popen(python+' "'+mod+'Automater/Automater.py" '+ip).read()
 
 if 'Unfortunately there is neither a tekdefense.xml' not in res:
     print(res)
