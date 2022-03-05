@@ -16,7 +16,7 @@ try:
     os.system('git clone https://github.com/17ack312/Automater.git --quiet')
 except:
     if not os.path.exists(mod+'Automater'):
-        os.system('git clone https://github.com/17ack312/Automater.git --quiet')
+        os.system("git clone https://github.com/17ack312/Automater.git --quiet")
 
 res=os.popen('python2 "'+mod+'Automater/Automater.py" '+ip).read()
 
