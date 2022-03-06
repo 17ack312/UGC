@@ -13,10 +13,10 @@ def _rmdir(path):
 
 try:
     _rmdir(mod+'Automater')
-    os.system('git clone https://github.com/17ack312/Automater.git --quiet')
+    os.system('cd "'+mod+'" && git clone https://github.com/17ack312/Automater.git --quiet')
 except:
     if not os.path.exists(mod+'Automater'):
-        os.system("git clone https://github.com/17ack312/Automater.git --quiet")
+    os.system('cd "'+mod+'" && git clone https://github.com/17ack312/Automater.git --quiet')
 
 res=os.popen('python2 "'+mod+'Automater/Automater.py" '+ip).read()
 
