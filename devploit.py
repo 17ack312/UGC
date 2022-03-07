@@ -13,12 +13,12 @@ flag=int(sys.argv[1])
 ip=sys.argv[2]
 
 try:
-    _rmdir(mod+'d_tect/')
+    _rmdir(mod+'Devploit/')
 except:
     pass
 
-if not os.path.exists(mod+'d_tect/'):
-    os.system('cd "'+mod+'" && git clone https://github.com/17ack312/Devploit.git "'+mod+'d_tect/" --quiet')
+if not os.path.exists(mod+'Devploit/'):
+    os.system('cd "'+mod+'" && git clone https://github.com/17ack312/Devploit.git "'+mod+'Devploit/" --quiet')
 
 try:
     res=os.popen('python2 "'+mod+'Devploit/Devploit" '+str(flag)+' "'+ip+'"').read()
