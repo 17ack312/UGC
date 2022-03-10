@@ -1,8 +1,5 @@
 import sys,os
-
 import style,nmap
-
-
 
 nm=nmap.PortScanner()
 
@@ -11,8 +8,6 @@ def _scan(ip,arg):
     for i in res.keys():
         res=res[i]
     return res
-
-
 
 def tcp_services(ip):
     res=_scan(ip,'-sV -O -Pn')
@@ -96,8 +91,8 @@ def udp_services(ip):
             if state.lower() == 'open':
                 print((port + ',' + name + ',' + product + ' ' + version))
 
-ip=sys.argv[1]
-flag=int(sys.argv[2])
+ip=sys.argv[2]
+flag=int(sys.argv[1])
 
 if flag==1:
     tcp_services(ip)
