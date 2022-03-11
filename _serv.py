@@ -1,101 +1,67 @@
-import sys,os
-import style,nmap
+import sys
+import nmap
 
 nm=nmap.PortScanner()
 
 def _scan(ip,arg):
     res=nm.scan(hosts=ip,arguments=arg)['scan']
-    for i in res.keys():
-        res=res[i]
     return res
 
-def tcp_services(ip):
-    res=_scan(ip,'-sV -O -Pn')
+def prepare_data(data,flag):
+    master={}
+    for i in data.keys():
+        x=[]
+        if flag in (data[i].keys()):
+            y={}
+            try:
+                up=round(float(data[i]['uptime']['seconds'])/(24*3600))
+            except:
+                up=0
+            try:
+                last=str(data[i]['uptime']['lastboot'])
+            except:
+                last=''
+            y['up']=str(up)+' days'
+            y['last']=str(last)
+            temp=data[i][flag]
+            for j in temp.keys():
+                port=str(j)
+                state=str(temp[j]['state'])
+                try:
+                    name=str(temp[j]['name'])
+                except:
+                    name=''
+                try:
+                    prod=str(temp[j]['product'])
+                except:
+                    prod=''
+                try:
+                    ver=str(temp[j]['version'])
+                except:
+                    ver=''
+                name=name+' '+prod+' '+ver
 
-    print('[✓] UP TIME')
-    try:
-        print('[i] Last Boot : ' + str(res['uptime']['lastboot']))
-    except:
-        pass
-    try:
-        print('[i] Up Time   : ' + str(int(int(res['uptime']['seconds']) / (24 * 3600))) + ' Days')
-    except:
-        pass
-    try:
-        for i in (res['osmatch']):
-            if int(i['accuracy']) == 100:
-                print('[i] os :', i['name'])
-    except:
-        pass
+                if 'open' in state:
+                    x.append(str(port+','+name))
+                y['port']=x
+        master[i]=y
+    print(master)
 
-    print('[✓] OPEN TCP PORTS AND SERVICES ')
-    if 'tcp' not in res.keys():
-        exit()
-    else:
-        res = res['tcp']
-        print(('PORT,SERVICE,INFORMATION'))
-        for i in res.keys():
-            try:
-                port = str(i)
-            except:
-                port = ''
-            try:
-                state = str(res[i]['state'])
-            except:
-                state = ''
-            try:
-                name = str(res[i]['name'])
-            except:
-                name = ''
-            try:
-                product = str(res[i]['product'])
-            except:
-                product = ''
-            try:
-                version = str(res[i]['version'])
-            except:
-                version = ''
-            if state.lower() == 'open':
-                print((port + ',' + name + ',' + product + ' ' + version))
+def tcp(hosts):
+    res=_scan(hosts,'-sV -O')
+    prepare_data(res,'tcp')
 
+def udp(hosts):
+    res=_scan(hosts,'-sU')
+    prepare_data(res,'udp')
 
 
-def udp_services(ip):
-    res=_scan(ip,'-sU')
-    if 'udp' not in res.keys():
-        exit()
-    else:
-        res = res['udp']
-        print('PORT,SERVICE,INFORMATION')
-        for i in res.keys():
-            try:
-                port = str(i)
-            except:
-                port = ''
-            try:
-                state = str(res[i]['state'])
-            except:
-                state = ''
-            try:
-                name = str(res[i]['name'])
-            except:
-                name = ''
-            try:
-                product = str(res[i]['product'])
-            except:
-                product = ''
-            try:
-                version = str(res[i]['version'])
-            except:
-                version = ''
-            if state.lower() == 'open':
-                print((port + ',' + name + ',' + product + ' ' + version))
 
-ip=sys.argv[2]
-flag=int(sys.argv[1])
+flag=sys.argv[1]
+hosts=sys.argv[2]
 
 if flag==1:
-    tcp_services(ip)
+    tcp(hosts)
 if flag==2:
-    udp_services(ip)
+    udp(hosts)
 
