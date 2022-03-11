@@ -68,7 +68,7 @@ def udp(hosts):
 
 
 
-flag=sys.argv[1]
+flag=int(sys.argv[1])
 hosts=sys.argv[2]
 
 if flag==1:
