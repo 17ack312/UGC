@@ -455,6 +455,7 @@ class admin_finder:
 			admin=admin.strip()
 			full = url+"/"+admin
 			r = requests.get(full,verify=False)
+			get = r.status_code
 			if get == 200:
 				#print (color.Y+color.BOLD+"[+]"+color.BOLD+" Admin Page Found ! : "+color.ENDC+full)
 				print (full)
@@ -1585,8 +1586,7 @@ if __name__ == '__main__':
 	try:
 		__main__()
 	except KeyboardInterrupt:
-		#print (color.BOLD+color.Y+"Exiting Now !"+color.ENDC)
-		exit()
+		print (color.BOLD+color.Y+"Exiting Now !"+color.ENDC)
+		sys.exit(0)
 	except urllib2.HTTPError:
-		#print (color.BOLD+color.Y+"Error, Retry Later ! (Urllib2 HTTPError)"+color.ENDC)
-		exit()
+		print (color.BOLD+color.Y+"Error, Retry Later ! (Urllib2 HTTPError)"+color.ENDC)
