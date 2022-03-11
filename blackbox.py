@@ -1586,6 +1586,7 @@ if __name__ == '__main__':
 		__main__()
 	except KeyboardInterrupt:
 		#print (color.BOLD+color.Y+"Exiting Now !"+color.ENDC)
-		sys.exit(0)
+		exit()
 	except urllib2.HTTPError:
 		#print (color.BOLD+color.Y+"Error, Retry Later ! (Urllib2 HTTPError)"+color.ENDC)
+		exit()
