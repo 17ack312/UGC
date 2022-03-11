@@ -20,7 +20,7 @@
 ### ADMIN PAGE FINDER  : https://packetstormsecurity.com/files/112855/Admin-Page-Finder-Script.html                          ###
 ### XSS/SQLI/RCE SCANNER FROM : https://github.com/zigoo0/webpwn3r !                                                         ###
 ################################################################################################################################
-import requests,json,sys, time, re, os, base64, random,hashlib,timeit,ftplib,pexpect,urllib2,urllib
+import requests,json,sys, time, re, os, base64, random,hashlib,timeit,ftplib,pexpect,urllib2,urllib,urllib3
 from sys import platform
 from time import gmtime, strftime
 from optparse import OptionParser
@@ -38,6 +38,8 @@ __facebook__   = 'https://facebook.com/S44DH4T'
 __version__    = '2.0'
 __license__    = 'GPLv2'
 __scrname__    = 'BLACKBOx v%s' % (__version__)
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def __banner__():
 	fool=0
@@ -121,7 +123,7 @@ class scanner:
 		if opener.code == 200:
 			print color.G+"\t[!] Status code: 200 OK"+color.ENDC
 		if opener.code == 404:
-			print color.R+"\t[!] Page was not found! Please check the URL \n"+color.ENDC
+			#print color.R+"\t[!] Page was not found! Please check the URL \n"+color.ENDC
 			exit()
 		Server = opener.headers.get(HTTP_HEADER.SERVER)
 		Host = url.split("/")[2]
@@ -390,26 +392,7 @@ class admin_finder:
 		for admin in php:
 			admin=admin.strip()
 			full = url+"/"+admin
-			r = requests.get(full)
-			get = r.status_code
-			if get == 200:
-				#print (color.Y+color.BOLD+"[+]"+color.BOLD+" Admin Page Found ! : "+color.ENDC+full)
-				print (full)
-			"""
-			elif get == 403:
-				#print (color.R+color.BOLD+"[-]"+color.BOLD+" Forbidden          : "+color.ENDC+full)
-			elif get == 302:
-				#print (color.Y+color.BOLD+"[+]"+color.BOLD+" Redirect           : "+color.ENDC+full)
-			elif get==404:
-				#print (color.W+color.BOLD+"[-]"+color.BOLD+" Not Found          : "+color.ENDC+full)
-			else:
-				#print (color.W+color.BOLD+"[-] Response "+str(get)+"       : "+full)    def asp_admin(self,url):
-			"""
-		asp = self.asp
-		for admin in asp:
-			admin=admin.strip()
-			full = url+"/"+admin
-			r = requests.get(full)
+			r = requests.get(full,verify=False)
 			get = r.status_code
 			if get == 200:
 				#print (color.Y+color.BOLD+"[+]"+color.BOLD+" Admin Page Found ! : "+color.ENDC+full)
@@ -424,12 +407,33 @@ class admin_finder:
 			else:
 				print (color.W+color.BOLD+"[-] Response "+str(get)+"       : "+full)
 			"""
+    def asp_admin(self,url):
+		asp = self.asp
+		for admin in asp:
+			admin=admin.strip()
+			full = url+"/"+admin
+			r = requests.get(full,verify=False)
+			get = r.status_code
+			if get == 200:
+				#print (color.Y+color.BOLD+"[+]"+color.BOLD+" Admin Page Found ! : "+color.ENDC+full)
+				print (full)
+			"""
+			elif get == 403:
+				print (color.R+color.BOLD+"[-]"+color.BOLD+" Forbidden          : "+color.ENDC+full)
+			elif get == 302:
+				print (color.Y+color.BOLD+"[+]"+color.BOLD+" Redirect           : "+color.ENDC+full)
+			elif get==404:
+				print (color.W+color.BOLD+"[-]"+color.BOLD+" Not Found          : "+color.ENDC+full)
+			else:
+				print (color.W+color.BOLD+"[-] Response "+str(get)+"       : "+full)
+			"""
+
     def cfm_admin(self,url):
 		cfm = self.cfm
 		for admin in cfm:
 			admin=admin.strip()
 			full = url+"/"+admin
-			r = requests.get(full)
+			r = requests.get(full,verify=False)
 			get = r.status_code
 			if get == 200:
 				#print (color.Y+color.BOLD+"[+]"+color.BOLD+" Admin Page Found ! : "+color.ENDC+full)
@@ -444,13 +448,13 @@ class admin_finder:
 			else:
 				print (color.W+color.BOLD+"[-] Response "+str(get)+"       : "+full)
 			"""
+
     def js_admin(self,url):
 		js = self.js
 		for admin in js:
 			admin=admin.strip()
 			full = url+"/"+admin
-			r = requests.get(full)
-			get = r.status_code
+			r = requests.get(full,verify=False)
 			if get == 200:
 				#print (color.Y+color.BOLD+"[+]"+color.BOLD+" Admin Page Found ! : "+color.ENDC+full)
 				print (full)
@@ -470,11 +474,11 @@ class admin_finder:
 		for admin in cgi:
 			admin=admin.strip()
 			full = url+"/"+admin
-			r = requests.get(full)
+			r = requests.get(full,verify=False)
 			get = r.status_code
 			if get == 200:
 				#print (color.Y+color.BOLD+"[+]"+color.BOLD+" Admin Page Found ! : "+color.ENDC+full)
-				print (full)			
+				print (full)
 			"""
 			elif get == 403:
 				print (color.R+color.BOLD+"[-]"+color.BOLD+" Forbidden          : "+color.ENDC+full)
@@ -491,7 +495,7 @@ class admin_finder:
 		for admin in brf:
 			admin=admin.strip()
 			full = url+"/"+admin
-			r = requests.get(full)
+			r = requests.get(full,verify=False)
 			get = r.status_code
 			if get == 200:
 				#print (color.Y+color.BOLD+"[+]"+color.BOLD+" Admin Page Found ! : "+color.ENDC+full)
@@ -536,10 +540,10 @@ class BruteForce:
 		word = word.readlines()
 		for words in word:
 			words = words.strip()
-
+			
 			payload = {'log' : username,
 			           'pwd' : words}
-
+			
 			s = requests.post(url, data=payload, headers=headers)
 			print (color.R+"------------------------------------------------------------------")
 			print (color.G+datetime+color.W+" username   : "+color.Y+payload['log'])
@@ -847,7 +851,7 @@ class dnsinfo:
 			get = get.text
 			ok = json.loads(get)
 			return ok
-
+		
 		def rzlt(details):
 			print (color.G+"Domains Hosted : "+color.W+color.BOLD+details['domainCount']+color.ENDC)
 			print (color.G+"IP Address     : "+color.W+color.BOLD+details['remoteIpAddress']+color.ENDC)
@@ -1581,7 +1585,7 @@ if __name__ == '__main__':
 	try:
 		__main__()
 	except KeyboardInterrupt:
-		print (color.BOLD+color.Y+"Exiting Now !"+color.ENDC)
+		#print (color.BOLD+color.Y+"Exiting Now !"+color.ENDC)
 		sys.exit(0)
 	except urllib2.HTTPError:
-		print (color.BOLD+color.Y+"Error, Retry Later ! (Urllib2 HTTPError)"+color.ENDC)
+		#print (color.BOLD+color.Y+"Error, Retry Later ! (Urllib2 HTTPError)"+color.ENDC)
