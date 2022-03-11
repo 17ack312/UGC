@@ -191,8 +191,8 @@ def ip_lookup(host):
     # img = Image.open("temp.png")
     # img.show()
 
-IN=sys.argv[1]
-flag=int(sys.argv[2])
+IN=sys.argv[2]
+flag=int(sys.argv[1])
 
 if flag==1:
     try:
