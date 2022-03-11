@@ -10,9 +10,8 @@ def _scan(ip,arg):
 def prepare_data(data,flag):
     master={}
     for i in data.keys():
-        x=[]
+        x=[];y={}
         if flag in (data[i].keys()):
-            y={}
             try:
                 up=round(float(data[i]['uptime']['seconds'])/(24*3600))
             except:
