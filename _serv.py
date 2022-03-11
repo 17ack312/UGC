@@ -21,8 +21,19 @@ def prepare_data(data,flag):
                 last=str(data[i]['uptime']['lastboot'])
             except:
                 last=''
+
+            try:
+                for j in (data[i]['osmatch']):
+                    if float(j['accuracy']) > 85:
+                        os = (j['name'])
+                        for k in j['osclass']:
+                            os = os + ',' + (k['type'])
+            except:
+                os=''
+
             y['up']=str(up)+' days'
             y['last']=str(last)
+            y['os']=str(os)
             temp=data[i][flag]
             for j in temp.keys():
                 port=str(j)
@@ -64,4 +75,3 @@ if flag==1:
     tcp(hosts)
 if flag==2:
     udp(hosts)
-
