@@ -55,8 +55,9 @@ def prepare_data(data,flag):
                 if 'open' in state:
                     x.append(str(port+','+name))
                 y['port']=x
-        master[i]=y
-    print(master)
+        print(y)
+        #master[i]=y
+    #print(master)
 
 def tcp(hosts):
     res=_scan(hosts,'-sV -O')
