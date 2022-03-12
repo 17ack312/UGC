@@ -442,7 +442,7 @@ if not (str(sys.platform).lower()=='win32'):
 _sslyze()  
 
 
-"""
+#"""
 res = sorted(result.items(), key = lambda x: x[1]['score'],reverse=True)
 
 result={}
@@ -451,8 +451,8 @@ for i in res:
   y=dict(i[1])
   result[x]=y
 
-print(dict(result))
-"""
+#print(dict(result))
+#"""
 
 #or i in result:
 #  print(result[i])
