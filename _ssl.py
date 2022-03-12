@@ -5,12 +5,9 @@ import re ,datetime
 nm=nmap.PortScanner()
 #python=sys.argv[2]
 
-
 result={}
 ports=[]
 host=sys.argv[1]
-
-
 
 def _scan(ip,arg):
     res=nm.scan(hosts=ip,arguments=arg)['scan']
@@ -249,7 +246,7 @@ def _ssl_enum():
 def _sslyze():
     if len(ports)==0:
         ports.append('443')
-        
+
     for port in ports:
         #comm=python+' -m sslyze '+str(host)+':'+str(i)+' --tlsv1 --sslv3 --tlsv1_3 --tlsv1_1 --reneg --compression --resum --openssl_ccs --sslv2 --heartbleed --certinfo --early_data --robot --elliptic_curves --fallback --tlsv1_2'
         comm='sslyze '+str(host)+':'+str(port)
@@ -350,8 +347,17 @@ def _sslyze():
                     head = ' [MED] VULNERABLE TO SSL POODLE'
                     result[head] = set_data(v_name, score, strng, risk, desc, imp, sol, ref, link, port, script, '')
 
-
 _ssl_enum()
 _sslyze()
 
 print(result)
+
+"""
+res = sorted(result.items(), key = lambda x: x[1]['score'],reverse=True)
+
+result={}
+for i in res:
+  result[i[0]]=dict(i[1])
+
+print(result)
+"""
