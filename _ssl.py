@@ -3,7 +3,7 @@ import re,datetime
 import subprocess
 
 nm=nmap.PortScanner()
-python='py'
+python=sys.argv[2]
 
 
 result={}
