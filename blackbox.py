@@ -394,7 +394,10 @@ class admin_finder:
 			admin=admin.strip()
 			full = url+"/"+admin
 			r = requests.get(full,verify=False)
-			get = r.status_code
+			try:
+				get = r.status_code
+			except:
+				get=0
 			if get == 200:
 				#print (color.Y+color.BOLD+"[+]"+color.BOLD+" Admin Page Found ! : "+color.ENDC+full)
 				print (full)
@@ -414,7 +417,10 @@ class admin_finder:
 			admin=admin.strip()
 			full = url+"/"+admin
 			r = requests.get(full,verify=False)
-			get = r.status_code
+			try:
+				get = r.status_code
+			except:
+				get=0
 			if get == 200:
 				#print (color.Y+color.BOLD+"[+]"+color.BOLD+" Admin Page Found ! : "+color.ENDC+full)
 				print (full)
@@ -435,7 +441,10 @@ class admin_finder:
 			admin=admin.strip()
 			full = url+"/"+admin
 			r = requests.get(full,verify=False)
-			get = r.status_code
+			try:
+				get = r.status_code
+			except:
+				get=0
 			if get == 200:
 				#print (color.Y+color.BOLD+"[+]"+color.BOLD+" Admin Page Found ! : "+color.ENDC+full)
 				print (full)
@@ -456,7 +465,10 @@ class admin_finder:
 			admin=admin.strip()
 			full = url+"/"+admin
 			r = requests.get(full,verify=False)
-			get = r.status_code
+			try:
+				get = r.status_code
+			except:
+				get=0
 			if get == 200:
 				#print (color.Y+color.BOLD+"[+]"+color.BOLD+" Admin Page Found ! : "+color.ENDC+full)
 				print (full)
@@ -477,7 +489,10 @@ class admin_finder:
 			admin=admin.strip()
 			full = url+"/"+admin
 			r = requests.get(full,verify=False)
-			get = r.status_code
+			try:
+				get = r.status_code
+			except:
+				get=0
 			if get == 200:
 				#print (color.Y+color.BOLD+"[+]"+color.BOLD+" Admin Page Found ! : "+color.ENDC+full)
 				print (full)
@@ -498,7 +513,10 @@ class admin_finder:
 			admin=admin.strip()
 			full = url+"/"+admin
 			r = requests.get(full,verify=False)
-			get = r.status_code
+			try:
+				get = r.status_code
+			except:
+				get=0
 			if get == 200:
 				#print (color.Y+color.BOLD+"[+]"+color.BOLD+" Admin Page Found ! : "+color.ENDC+full)
 				print (full)
