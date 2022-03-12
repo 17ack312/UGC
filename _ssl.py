@@ -169,7 +169,7 @@ def process_data(data):
                        ref='CVE-2015-4000'
                        link='https://www.securityfocus.com/bid/74733,https://weakdh.org'
 
-                       head=' [Med] TLS DHE_EXPORT Ciphers Downgrade MitM (Logjam)'.upper()
+                       head=' [MED] TLS DHE_EXPORT Ciphers Downgrade MitM (Logjam)'.upper()
                        result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
 
                    if re.search('State: VULNERABLE', script) and re.search('Diffie-Hellman Key Exchange Insufficient Diffie-Hellman Group Strength',script):
@@ -366,6 +366,6 @@ print(dict(result))
 #or i in result:
 #  print(result[i])
 
-result=(str(result).replace("'",'"'))
+#result=(str(result).replace("'",'"'))
 
-print(result)
+print(json.dumps(result))
