@@ -347,8 +347,99 @@ def _sslyze():
                     head = ' [MED] VULNERABLE TO SSL POODLE'
                     result[head] = set_data(v_name, score, strng, risk, desc, imp, sol, ref, link, port, script, '')
 
+
+
+def _sslscan():
+  if len(ports)==0:
+    ports.append('443')
+
+  for port in ports:
+      #comm=python+' -m sslyze '+str(host)+':'+str(i)+' --tlsv1 --sslv3 --tlsv1_3 --tlsv1_1 --reneg --compression --resum --openssl_ccs --sslv2 --heartbleed --certinfo --early_data --robot --elliptic_curves --fallback --tlsv1_2'
+      comm='sslscan --no-color '+str(host)+':'+str(port)+' | sed "s/^  /#$/g"'
+      #res=subprocess.check_output(comm,shell=True).decode()
+      res=os.popen(comm).read()
+
+      for x in res.replace('\r','').replace('\n','#').split('#$'):
+        if 'SSL/TLS Protocols' in x:
+          script=(x).replace('#','\n')
+          for y in x.replace('#','\n').split('\n'):
+            if 'enabled' in y:
+              if 'SSLv2' in y:
+                v_name='SSL Version 2 Protocol Detection'
+                score=7.5
+                strng='CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N'
+                risk='High'
+                desc='The remote service accepts connections encrypted using SSL 2.0.'
+                imp='These versions of SSL are affected by several cryptographic flaws, including:\n- An insecure padding scheme with CBC ciphers.\n- Insecure session renegotiation and resumption schemes.\nAn attacker can exploit these flaws to conduct man-in-the-middle attacks or to decrypt communications between the affected service and clients.\nAlthough SSL/TLS has a secure means for choosing the highest supported version of the protocol (so that these versions will be used only if the client or server support nothing better), many web browsers implement this in an unsafe way that allows an attacker to downgrade a connection (such as in POODLE). Therefore, it is recommended that these protocols be disabled entirely.'
+                sol='Consult the application\'s documentation to disable SSL 2.0.\nUse TLS 1.2 (with approved cipher suites) or higher instead.'
+                ref='CVE-2014-3566'
+                link='https://www.schneier.com/academic/paperfiles/paper-ssl.pdf,http://www.nessus.org/u?b06c7e95,http://www.nessus.org/u?247c4540,https://www.openssl.org/~bodo/ssl-poodle.pdf,http://www.nessus.org/u?5d15ba70,https://www.imperialviolet.org/2014/10/14/poodle.html,https://tools.ietf.org/html/rfc7507,https://tools.ietf.org/html/rfc7568'
+
+                head='[HIGH] SSLV2 IS ENABLED'
+                result[head] = set_data(v_name, score, strng, risk, desc, imp, sol, ref, link, port, script, '')
+              if 'SSLv3' in y:
+                v_name='SSL Version 2 Protocol Detection'
+                score=7.5
+                strng='CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N'
+                risk='High'
+                desc='The remote service accepts connections encrypted using SSL 3.0.'
+                imp='These versions of SSL are affected by several cryptographic flaws, including:\n- An insecure padding scheme with CBC ciphers.\n- Insecure session renegotiation and resumption schemes.\nAn attacker can exploit these flaws to conduct man-in-the-middle attacks or to decrypt communications between the affected service and clients.\nAlthough SSL/TLS has a secure means for choosing the highest supported version of the protocol (so that these versions will be used only if the client or server support nothing better), many web browsers implement this in an unsafe way that allows an attacker to downgrade a connection (such as in POODLE). Therefore, it is recommended that these protocols be disabled entirely.'
+                sol='Consult the application\'s documentation to disable SSL 3.0.\nUse TLS 1.2 (with approved cipher suites) or higher instead.'
+                ref='CVE-2014-3566'
+                link='https://www.schneier.com/academic/paperfiles/paper-ssl.pdf,http://www.nessus.org/u?b06c7e95,http://www.nessus.org/u?247c4540,https://www.openssl.org/~bodo/ssl-poodle.pdf,http://www.nessus.org/u?5d15ba70,https://www.imperialviolet.org/2014/10/14/poodle.html,https://tools.ietf.org/html/rfc7507,https://tools.ietf.org/html/rfc7568'
+
+                head='[HIGH] SSLV2 IS ENABLED'
+                result[head] = set_data(v_name, score, strng, risk, desc, imp, sol, ref, link, port, script, '')
+
+              if 'TLSv1.0' in y:
+                v_name='TLS Version 1.0 Protocol Detection'
+                score=6.5
+                strng='CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:L/A:N'
+                risk='Medium'
+                desc='The remote service accepts connections encrypted using TLS 1.0.'
+                imp='TLS 1.0 has a number of cryptographic design flaws. Modern implementations of TLS 1.0 mitigate these problems, but newer versions of TLS like 1.2 and 1.3 are designed against these flaws and should be used whenever possible.As of March 31, 2020, Endpoints that aren’t enabled for TLS 1.2 and higher will no longer function properly with major web browsers and major vendors.PCI DSS v3.2 requires that TLS 1.0 be disabled entirely by June 30, 2018, except for POS POI terminals (and the SSL/TLS termination points to which they connect) that can be verified as not being susceptible to any known exploits.'
+                sol='Enable support for TLS 1.2 and 1.3, and disable support for TLS 1.0'
+                ref='CVE-2011-3389'
+                link='https://tools.ietf.org/html/draft-ietf-tls-oldversions-deprecate-00'
+
+                head = ' [MED] TLS V1.0 IS ENABLED'
+                result[head] = set_data(v_name, score, strng, risk, desc, imp, sol, ref, link, port, script, '')
+
+              if 'TLSv1.1' in y:
+                v_name='TLS Version 1.1 Protocol Detection'
+                score=0.0
+                strng=''
+                risk='Informational'
+                desc='The remote service accepts connections encrypted using TLS 1.1.'
+                imp='TLS 1.1 lacks support for current and recommended cipher suites.\nCiphers that support encryption before MAC computation, and authenticated encryption modes such as GCM cannot be used with TLS 1.1.\nAs of March 31, 2020, Endpoints that are not enabled for TLS 1.2 and higher will no longer function properly with major web browsers and major vendors.'
+                sol='Enable support for TLS 1.2 and/or 1.3, and disable support for TLS 1.1.'
+                ref=''
+                link='https://tools.ietf.org/html/draft-ietf-tls-oldversions-deprecate-00,http://www.nessus.org/u?c8ae820d'
+
+                head='[INFO] TLS V1.1 IS ENABLED'
+                result[head] = set_data(v_name, score, strng, risk, desc, imp, sol, ref, link, port, script, '')
+
+              if 'TLSv1.2' in y:
+                v_name='TLS Version 1.2 Protocol Detection'
+                score=0.0
+                strng=''
+                risk='Informational'
+                desc='The remote service encrypts traffic using a version of TLS.'
+                imp='The remote service accepts connections encrypted using TLS 1.2.'
+                sol=''
+                ref=''
+                link='https://tools.ietf.org/html/rfc5246'
+
+                head='[INFO] TLS V1.2 IS ENABLED'
+                result[head] = set_data(v_name, score, strng, risk, desc, imp, sol, ref, link, port, script, '')
+
+
 _ssl_enum()
-_sslyze()
+
+if not (str(sys.platform).lower()=='win32'):
+  _sslscan()
+
+_sslyze()  
 
 
 """
