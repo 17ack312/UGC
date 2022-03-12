@@ -249,7 +249,7 @@ def _ssl_enum():
 def _sslyze():
     for port in ports:
         #comm=python+' -m sslyze '+str(host)+':'+str(i)+' --tlsv1 --sslv3 --tlsv1_3 --tlsv1_1 --reneg --compression --resum --openssl_ccs --sslv2 --heartbleed --certinfo --early_data --robot --elliptic_curves --fallback --tlsv1_2'
-        comm=python+' -m sslyze '+str(host)+':'+str(port)
+        comm='sslyze '+str(host)+':'+str(port)
         res=subprocess.check_output(comm,shell=True).decode()
 
         for x in res.replace('\r','').replace('\n','##').replace('*','#$*').split('#$'):
