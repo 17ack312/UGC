@@ -40,6 +40,7 @@ __license__    = 'GPLv2'
 __scrname__    = 'BLACKBOx v%s' % (__version__)
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+ip=''
 
 def __banner__():
 	fool=0
