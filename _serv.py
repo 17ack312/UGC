@@ -59,11 +59,11 @@ def prepare_data(data,flag):
     #print(master)
 
 def tcp(hosts):
-    res=_scan(hosts,'-sV -O')
+    res=_scan(hosts,'-sV -O -F')
     prepare_data(res,'tcp')
 
 def udp(hosts):
-    res=_scan(hosts,'-sU')
+    res=_scan(hosts,'-sU -F')
     prepare_data(res,'udp')
 
 
