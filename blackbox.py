@@ -393,7 +393,7 @@ class admin_finder:
 		for admin in php:
 			admin=admin.strip()
 			full = url+"/"+admin
-			r = requests.get(full,verify=False)
+			r = requests.get(full,timeout=2,verify=False)
 			try:
 				get = r.status_code
 			except:
@@ -416,7 +416,7 @@ class admin_finder:
 		for admin in asp:
 			admin=admin.strip()
 			full = url+"/"+admin
-			r = requests.get(full,verify=False)
+			r = requests.get(full,timeout=2,verify=False)
 			try:
 				get = r.status_code
 			except:
@@ -440,7 +440,7 @@ class admin_finder:
 		for admin in cfm:
 			admin=admin.strip()
 			full = url+"/"+admin
-			r = requests.get(full,verify=False)
+			r = requests.get(full,timeout=2,verify=False)
 			try:
 				get = r.status_code
 			except:
@@ -464,7 +464,7 @@ class admin_finder:
 		for admin in js:
 			admin=admin.strip()
 			full = url+"/"+admin
-			r = requests.get(full,verify=False)
+			r = requests.get(full,timeout=2,verify=False)
 			try:
 				get = r.status_code
 			except:
@@ -488,7 +488,7 @@ class admin_finder:
 		for admin in cgi:
 			admin=admin.strip()
 			full = url+"/"+admin
-			r = requests.get(full,verify=False)
+			r = requests.get(full,timeout=2,verify=False)
 			try:
 				get = r.status_code
 			except:
@@ -512,7 +512,7 @@ class admin_finder:
 		for admin in brf:
 			admin=admin.strip()
 			full = url+"/"+admin
-			r = requests.get(full,verify=False)
+			r = requests.get(full,timeout=2,verify=False)
 			try:
 				get = r.status_code
 			except:
