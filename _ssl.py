@@ -234,7 +234,7 @@ def process_data(data):
    #print(result)
 
 def _ssl_enum():
-    res=_scan(host,'--script=ssl-enum-ciphers,ssl-ccs-injection.nse,ssl-cert-intaddr.nse,ssl-cert.nse,ssl-date.nse,ssl-dh-params.nse,ssl-known-key.nse,ssl-heartbleed.nse,ssl-poodle.nse,sslv2-drown.nse,sslv2.nse -F')
+    res=_scan(host,'-sV --script=ssl-enum-ciphers,ssl-ccs-injection.nse,ssl-cert-intaddr.nse,ssl-cert.nse,ssl-date.nse,ssl-dh-params.nse,ssl-known-key.nse,ssl-heartbleed.nse,ssl-poodle.nse,sslv2-drown.nse,sslv2.nse -F')
 
     if 'tcp' in res.keys():
         data=res['tcp']
