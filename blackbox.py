@@ -1139,6 +1139,7 @@ class cracker:
 ####################################
 def __main__():
 	__banner__()
+	ip=''
 	for arg in sys.argv:
 		if (arg=="--help" or arg=="-h"):
 			__help__()
