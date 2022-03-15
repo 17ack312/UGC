@@ -232,7 +232,7 @@ def process_data(data):
                        head=' [MED] VULNERABLE TO SSL POODLE'
                        result[head] = set_data(v_name, score, strng, risk, desc, imp, sol, ref, link, port, script,name)
 
-               if str(j)=='tls-ticketbleed' and re.search(,script,re.IGNORECASE):
+               if str(j)=='tls-ticketbleed' and re.search('VULNERABLE',script,re.IGNORECASE):
                   v_name='TLS TicketBleed'
                   score=7.5
                   strng='CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N'
