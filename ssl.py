@@ -231,10 +231,30 @@ def process_data(data):
 
                        head=' [MED] VULNERABLE TO SSL POODLE'
                        result[head] = set_data(v_name, score, strng, risk, desc, imp, sol, ref, link, port, script,name)
+
+               if str(j)=='tls-ticketbleed' and re.search(,script,re.IGNORECASE):
+                  v_name='TLS TicketBleed'
+                  score=7.5
+                  strng='CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N'
+                  risk='High'
+                  desc='Ticketbleed is a serious issue in products manufactured by F5, a popular vendor of TLS load-balancers. The issue allows for stealing information from the load balancer'
+                  imp='Ticketbleed is vulnerability in the implementation of the TLS SessionTicket extension found in some F5 products. It allows the leakage (\'bleeding\') of up to 31 bytes of data from uninitialized memory. This is caused by the TLS stack padding a Session ID, passed from the client, with data to make it 32-bits long.'
+                  sol=''
+                  ref='CVE-2016-9244,CWE:200'
+                  link='https://www.exploit-db.com/exploits/41298/'
+
+                  head='[HIGH] TLS TICKETBLEED FOUND'
+                  result[head] = set_data(v_name, score, strng, risk, desc, imp, sol, ref, link, port, script,name)
+
+
+
+
+
+
    #print(result)
 
 def _ssl_enum():
-    res=_scan(host,'-sV --script=ssl-enum-ciphers,ssl-ccs-injection.nse,ssl-cert-intaddr.nse,ssl-cert.nse,ssl-date.nse,ssl-dh-params.nse,ssl-known-key.nse,ssl-heartbleed.nse,ssl-poodle.nse,sslv2-drown.nse,sslv2.nse -F')
+    res=_scan(host,'-sV --script=ssl-enum-ciphers,ssl-ccs-injection.nse,ssl-cert-intaddr.nse,ssl-cert.nse,ssl-date.nse,ssl-dh-params.nse,ssl-known-key.nse,ssl-heartbleed.nse,ssl-poodle.nse,sslv2-drown.nse,sslv2.nse,tls-ticketbleed.nse -F')
 
     if 'tcp' in res.keys():
         data=res['tcp']
