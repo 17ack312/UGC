@@ -492,7 +492,7 @@ def process_data(data):
                     head='[HIGH] SLOWLORIS DOS ATTACK'
                     result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
 
-                if str(j)=='http-sql-injection' and re.search('Possible sqli',scripts,re.IGNORECASE):
+                if str(j)=='http-sql-injection' and re.search('Possible sqli',script,re.IGNORECASE):
                     v_name='SQL Injection'
                     score=10.0
                     strng='CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:N'
@@ -506,24 +506,95 @@ def process_data(data):
                     head='[HIGH] SQL INJECTION VULNERABILTY'
                     result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
 
+                if str(j)=='http-trace' and re.search('is enabled',script,re.IGNORECASE):
+                    v_name='TRACE Method Enabled'
+                    score=5.3
+                    strng='CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N'
+                    risk='Medium'
+                    desc='HTTP TRACE method is enabled on this web server. In the presence of other cross-domain vulnerabilities in web browsers, sensitive header information could be read from any domains that support the HTTP TRACE method.'
+                    imp='An attacker can use this information to conduct further attacks.'
+                    sol='Disable TRACE method to avoid attackers using it to better exploit other vulnerabilities.'
+                    ref='CVE-2003-1567,CVE-2004-2320,CVE-2010-0386,CWE:16,CWE:200,CERT:288308,CERT:867593'
+                    link='https://www.cgisecurity.com/whitehat-mirror/WH-WhitePaper_XST_ebook.pdf,http://www.apacheweek.com/issues/03-01-24,https://download.oracle.com/sunalerts/1000718.1.html'
 
+                    head=' [MED] TRACE METHOD ENABLED'
+                    result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
 
+                if str(j)=='http-traceroute' and len(script)>10:
+                    v_name='Traceroute Information'
+                    score=0.0
+                    strng=''
+                    risk='Informational'
+                    desc='It was possible to obtain traceroute information.'
+                    imp='Makes a traceroute to the remote host.'
+                    sol='N/A'
+                    ref=''
+                    link=''
 
+                    head='[INFO] TRACEROUTE INFORMATION'
+                    result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
 
+                if str(j)=='http-userdir-enum' and re.search('Potential Users',script,re.IGNORECASE):
+                    pass
+                    ##DUE
 
+                if str(j)=='http-vmware-path-vuln' and re.search('VULNERABLE',script,re.IGNORECASE):
+                    v_name='VMWARE Path Traversal'
+                    score=5.0
+                    strng='CVSS2#AV:N/AC:L/Au:N/C:P/I:N/A:N'
+                    risk='Medium'
+                    desc='Directory traversal vulnerability in VMware Server 1.x before 1.0.10 build 203137 and 2.x before 2.0.2 build 203138 on Linux, VMware ESXi 3.5, and VMware ESX 3.0.3 and 3.5 allows remote attackers to read arbitrary files via unspecified vectors.'
+                    imp='VMware is a set of server-emulation applications available for several platforms.Multiple VMware products are prone to a directory-traversal vulnerability because they fail to sufficiently sanitize user-supplied input. Attackers on the same subnetwork may use a specially crafted request to retrieve arbitrary files from the host operating system.A remote attacker could exploit the vulnerability using directory-traversal characters to access arbitrary files that contain sensitive information that could aid in further attacks.\nAffected :\n\t1.VMWare Server 2.0.1 build 156745\n\t2.VMWare Server 2.0.1\n\t3.VMWare Server 1.0.9 build 156507\n\t4.VMWare Server 1.0.9\n\t5.VMWare Server 1.0.8 build 126538\n\t6.VMWare Server 1.0.8\n\t7.VMWare Server 1.0.7 build 108231\n\t7.VMWare Server 1.0.7\n\t8.VMWare Server 1.0.6 build 91891\n\t9.VMWare Server 1.0.6\n\t10.VMWare Server 1.0.5 Build 80187\n\t11.VMWare Server 1.0.5\n\t12.VMWare Server 1.0.4\n\t13.VMWare Server 1.0.3\n\t14.VMWare Server 1.0.2\n\t15.VMWare Server 2.0\n\t16.VMWare ESXi Server 3.5 ESXe350-20090440\n\t17.VMWare ESXi Server 3.5\n\t18.VMWare ESX Server 3.0.3\n\t19.VMWare ESX Server 3.0.3\n\t20.VMWare ESX Server 3.5 ESX350-200906407\n\t21.VMWare ESX Server 3.5 ESX350-200904401\n\t22.VMWare ESX Server 3.5'
+                    sol='Use Non-Vulnerable Packages:\n\t1.VMWare Workstation 6.0.3\n\t2.VMWare Workstation 5.5.6\n\t3.VMWare Player 2.0.3\n\t4.VMWare Player 1.0.5\n\t5.VMWare ACE 2.0.3\n\t6.VMWare ACE 1.0.5\n\t7.VMWare ESX\n\t8.VMWare Server'
+                    ref='CVE-2009-3733'
+                    link='http://www.securityfocus.com/bid/36842,http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3733'
 
+                    head=' [MED] VMWARE PATH TRAVERSAL'
+                    result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
 
+                if str(j)=='http-vuln-misfortune-cookie' and re.search('VULNERABLE',script,re.IGNORECASE):
+                    v_name='Allegro RomPager 4.07 < 4.34 Multiple Vulnerabilities (Misfortune Cookie)'
+                    score=9.8
+                    strng='CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H'
+                    risk='Critical'
+                    desc='The cookie handling routines in RomPager 4.07 are vulnerable to remote code execution. This script has verified the vulnerability by exploiting the web server in a safe manner.'
+                    imp='Versions of RomPager 4.07 and prior to 4.34 are potentially affected by multiple issues :\n\t- A buffer overflow vulnerability exists because the RomPager web server fails to perform adequate bounds checks on user-supplied input. Attackers can exploit this issue to execute arbitrary code with the privileged access of RomPager.(CVE-2014-9223)\n\t- A security bypass vulnerability exists due to an error within the HTTP cookie management mechanism (aka, the \'Misfortune Cookie\' issue) which could allow any user to determine the 'fortune' of a request by manipulating cookies. An attacker can exploit this issue to corrupt memory and alter the application state by sending specially crafted HTTP cookies. This could be exploited to gain the administrative privileges for the current session by tricking the attacked device. (CVE-2014-9222)'
+                    sol='Contact the vendor for an updated firmware image. Allegro addressed both issues in mid-2005 with RomPager version 4.34.'
+                    ref='CVE-2014-9222,CVE-2014-9223,CWE:119,CWE:17'
+                    link='http://mis.fortunecook.ie/,http://www.nessus.org/u?e6bf690f,http://www.nessus.org/u?22cba06d,http://www.kb.cert.org/vuls/id/561444'
 
+                    head='[CRTIC] ROMPAGER - MISFORTUNE COOKIE'
+                    result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
 
+                if str(j)=='http-vuln-wnr1000-creds' and re.search('VULNERABLE',script,re.IGNORECASE):
+                    #v_name='Netgear WNR1000v3 Credential Harvesting'
+                    pass
+                    ##DUE
 
+                if str(j)=='http-webdav-scan':
+                    pass
+                    ##DUE
 
+                if str(j)=='http-xssed' and re.search('found the following previously reported XSS',script,re.IGNORECASE):
+                    v_name='Cross-Site Scripting(XSS)'
+                    score=6.1
+                    strng='CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N'
+                    risk='Medium'
+                    desc='Cross-site scripting (also known as XSS) is a web security vulnerability that allows an attacker to compromise the interactions that users have with a vulnerable application. It allows an attacker to circumvent the same origin policy, which is designed to segregate different websites from each other. Cross-site scripting vulnerabilities normally allow an attacker to masquerade as a victim user, to carry out any actions that the user is able to perform, and to access any of the user\'s data. If the victim user has privileged access within the application, then the attacker might be able to gain full control over all of the application\'s functionality and data.'
+                    imp='Cross-site Scripting (XSS) refers to client-side code injection attack wherein an attacker can execute malicious scripts into a legitimate website or web application. XSS occurs when a web application makes use of unvalidated or unencoded user input within the output it generates.\nThere are three main types of XSS attacks. These are:\n\tReflected XSS, where the malicious script comes from the current HTTP request.\n\tStored XSS, where the malicious script comes from the website\'s database.\n\tDOM-based XSS, where the vulnerability exists in client-side code rather than server-side code.\nThe actual impact of an XSS attack generally depends on the nature of the application, its functionality and data, and the status of the compromised user. For example:\nIn a brochureware application, where all users are anonymous and all information is public, the impact will often be minimal.\nIn an application holding sensitive data, such as banking transactions, emails, or healthcare records, the impact will usually be serious.\nIf the compromised user has elevated privileges within the application, then the impact will generally be critical, allowing the attacker to take full control of the vulnerable application and compromise all users and their data.'
+                    sol='Preventing cross-site scripting is trivial in some cases but can be much harder depending on the complexity of the application and the ways it handles user-controllable data.In general, effectively preventing XSS vulnerabilities is likely to involve a combination of the following measures:\nFilter input on arrival. At the point where user input is received, filter as strictly as possible based on what is expected or valid input.\nEncode data on output. At the point where user-controllable data is output in HTTP responses, encode the output to prevent it from being interpreted as active content. Depending on the output context, this might require applying combinations of HTML, URL, JavaScript, and CSS encoding.\nUse appropriate response headers. To prevent XSS in HTTP responses that aren\'t intended to contain any HTML or JavaScript, you can use the Content-Type and X-Content-Type-Options headers to ensure that browsers interpret the responses in the way you intend.\nContent Security Policy. As a last line of defense, you can use Content Security Policy (CSP) to reduce the severity of any XSS vulnerabilities that still occur.'
+                    ref='CWE:79,CVE-2020-10385'
+                    link='http://projects.webappsec.org/w/page/13246920/Cross%20Site%20Scripting,https://www.owasp.org/index.php/XSS_%28Cross_Site_Scripting%29_Prevention_Cheat_Sheet'
 
+                    head=' [MED] CROSS-SITE SCRIPTING'
+                    result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
 
-
-
+                if str(j)=='ip-https-discover':
+                    pass
+                    ##DUE
 
 def _http_nm():
-    res=_scan(host,'-sV --script=http-apache-negotiation.nse,http-avaya-ipoffice-users.nse,http-awstatstotals-exec.nse,http-brute.nse,http-comments-displayer.nse,http-config-backup.nse,http-cookie-flags,http-cors,http-cross-domain-policy.nse,http-csrf.nse,http-dombased-xss.nse,http-fileupload-exploiter.nse,http-frontpage-login.nse,http-git.nse,http-gitweb-projects-enum.nse,http-google-malware.nse,http-huawei-hg5xx-vuln.nse,http-iis-short-name-brute.nse,http-iis-webdav-vuln.nse,http-internal-ip-disclosure.nse,http-litespeed-sourcecode-download.nse,http-ls.nse,http-malware-host.nse,http-methods.nse,http-method-tamper.nse,http-open-proxy.nse,http-open-redirect.nse,http-passwd.nse,http-phpmyadmin-dir-traversal.nse,http-phpself-xss.nse,http-put,http-rfi-spider.nse,http-robots.txt.nse,http-shellshock.nse,http-slowloris-check.nse,http-sql-injection.nse --script-args="basepath=/cf/adminapi/, basepath=/cf/, http-aspnet-debug.path=/path,http-awstatstotals-exec.cmd=uname, http-awstatstotals-exec.uri=/awstats/index.php, http-cross-domain-policy.domain-lookup=true, http-put.url=\'/dav/nmap.php\',http-put.file=\'/root/Desktop/nmap.php\',http-put.url=\'/uploads/rootme.php\', http-put.file=\'/tmp/rootme.php\', uri=/cgi-bin/bin, cmd=ls" -F')
+    res=_scan(host,'-sV --script=http-apache-negotiation.nse,http-avaya-ipoffice-users.nse,http-awstatstotals-exec.nse,http-brute.nse,http-comments-displayer.nse,http-config-backup.nse,http-cookie-flags,http-cors,http-cross-domain-policy.nse,http-csrf.nse,http-dombased-xss.nse,http-fileupload-exploiter.nse,http-frontpage-login.nse,http-git.nse,http-gitweb-projects-enum.nse,http-google-malware.nse,http-huawei-hg5xx-vuln.nse,http-iis-short-name-brute.nse,http-iis-webdav-vuln.nse,http-internal-ip-disclosure.nse,http-litespeed-sourcecode-download.nse,http-ls.nse,http-malware-host.nse,http-methods.nse,http-method-tamper.nse,http-open-proxy.nse,http-open-redirect.nse,http-passwd.nse,http-phpmyadmin-dir-traversal.nse,http-phpself-xss.nse,http-put,http-rfi-spider.nse,http-robots.txt.nse,http-shellshock.nse,http-slowloris-check.nse,http-sql-injection.nse,http-trace.nse,http-traceroute.nse,http-userdir-enum.nse,http-vmware-path-vuln.nse,http-vuln-misfortune-cookie.nse,http-vuln-wnr1000-creds.nse,http-webdav-scan.nse,http-xssed.nse,ip-https-discover.nse --script-args="basepath=/cf/adminapi/, basepath=/cf/, http-aspnet-debug.path=/path,http-awstatstotals-exec.cmd=uname, http-awstatstotals-exec.uri=/awstats/index.php, http-cross-domain-policy.domain-lookup=true, http-put.url=\'/dav/nmap.php\',http-put.file=\'/root/Desktop/nmap.php\',http-put.url=\'/uploads/rootme.php\', http-put.file=\'/tmp/rootme.php\', uri=/cgi-bin/bin, cmd=ls" -F')
 
 
     if 'tcp' in res.keys():
