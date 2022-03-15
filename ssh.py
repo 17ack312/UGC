@@ -11,8 +11,8 @@ host=sys.argv[1]
 
 def _scan(ip, arg):
     res = nm.scan(hosts=ip, arguments=arg)['scan']
-    for i in res.keys():
-        res = res[i]
+    #for i in res.keys():
+    #    res = res[i]
     return res
 
 
@@ -42,11 +42,12 @@ def process_data(data):
            name=str(data[i]['name'])
 
            for j in (data[i]['script'].keys()):
+               print(j)
                script=data[i]['script'][j]
 
                #1              
                if str(j)=='sshv1':
-                if re.search('Server supports SSHv1',script):
+                if re.search('Server supports SSHv1',script,re.IGNORECASE):
                     v_name='SSH server supports SSH protocol v1 clients'
                     score=7.5
                     strng='CVSS2#AV:N/AC:L/Au:N/C:P/I:P/A:P'
@@ -64,7 +65,7 @@ def process_data(data):
                #2
                if str(j)=='ssh2-enum-algos':
                 for x in (script.replace('\r','').strip().replace('\n','#').replace('kex_algorithms:','\nkex_algorithms:').replace('server_host_key_algorithms:','\nserver_host_key_algorithms:').replace('encryption_algorithms:','\nencryption_algorithms:').replace('mac_algorithms:','\nmac_algorithms:').replace('compression_algorithms:','\ncompression_algorithms:')).split('\n'):
-                    if re.search('encryption_algorithms:',x) and (re.search('arcfour',x)):
+                    if re.search('encryption_algorithms:',x,re.IGNORECASE) and (re.search('arcfour',x,re.IGNORECASE)):
                         v_name='SSH Weak Algorithms Supported'
                         score=4.3
                         strng='CVSS2#AV:N/AC:M/Au:N/C:P/I:N/A:N'
@@ -78,7 +79,7 @@ def process_data(data):
                         head=' [MED] SSH WEAK ALGORITHM SUPPORTED'
                         result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
 
-                    if re.search('encryption_algorithms:',x) and (re.search('cbc',x)):
+                    if re.search('encryption_algorithms:',x,re.IGNORECASE) and (re.search('cbc',x,re.IGNORECASE)):
                         v_name='SSH Server CBC Mode Ciphers Enabled'
                         score=2.6
                         strng='CVSS2#AV:N/AC:H/Au:N/C:P/I:N/A:N'
@@ -92,7 +93,7 @@ def process_data(data):
                         head=' [LOW] SSH CBC MODE CIPHERS ENABLED'
                         result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
 
-                    if re.search('mac_algorithms:',x) and (re.search('hmac',x)):
+                    if re.search('mac_algorithms:',x,re.IGNORECASE) and (re.search('hmac',x,re.IGNORECASE)):
                         v_name='SSH Weak MAC Algorithms Enabled'
                         score=2.6
                         strng='CVSS2#AV:N/AC:H/Au:N/C:P/I:N/A:N'
@@ -106,7 +107,7 @@ def process_data(data):
                         head=' [LOW] SSH WEAK MAC ALGORITHM DETECTED'
                         result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
 
-                    if re.search('kex_algorithms:',x) and (re.search('-sha1',x) or re.search('non-elliptic-curve',x) or re.search('rsa1024',x)):
+                    if re.search('kex_algorithms:',x,re.IGNORECASE) and (re.search('-sha1',x,re.IGNORECASE) or re.search('non-elliptic-curve',x,re.IGNORECASE) or re.search('rsa1024',x,re.IGNORECASE)):
                         v_name='SSH Weak MAC Algorithms Enabled'
                         score=2.6
                         strng='CVSS2#AV:N/AC:H/Au:N/C:P/I:N/A:N'
@@ -145,14 +146,5 @@ def ssh_nm():
 
 
 ssh_nm()
-
-res = sorted(result.items(), key = lambda x: x[1]['score'],reverse=True)
-
-result={}
-for i in res:
-  x=i[0]
-  y=dict(i[1])
-  result[x]=y
-
 
 print(json.dumps(result))
