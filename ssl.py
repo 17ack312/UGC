@@ -45,7 +45,7 @@ def process_data(data):
                # 1
                if str(j)=='ssl-cert':
                    for x in (script).split('\n'):
-                       if re.search('Not valid after',x):
+                       if re.search('Not valid after',x,re.IGNORECASE):
                            s_date=(x.split(':',1)[1].split('T')[0].strip())
                            s_date=(datetime.datetime(int(s_date.split('-')[0]),int(s_date.split('-')[1]),int(s_date.split('-')[2])))
 
@@ -67,7 +67,7 @@ def process_data(data):
                    pass
                #3
                if str(j)=='ssl-enum-ciphers':
-                   if re.search('Weak certificate signature',script) or re.search('Insecure certificate signature',script):
+                   if re.search('Weak certificate signature',script,re.IGNORECASE) or re.search('Insecure certificate signature',script,re.IGNORECASE):
                        v_name='SSL Certificate Signed Using Weak Hashing Algorithm'
                        score=7.5
                        strng='CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N'
@@ -81,7 +81,7 @@ def process_data(data):
                        head='[HIGH] SSL CERTIFICATE SIGNED WITH WEAK HASHING ALGORITHMS'
                        result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
 
-                   if re.search('vulnerable to SWEET32 attack',script):
+                   if re.search('vulnerable to SWEET32 attack',script,re.IGNORECASE):
                        v_name='SSL Medium Strength Cipher Suites Supported (SWEET32)'
                        score=7.5
                        strng='CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N'
@@ -96,7 +96,7 @@ def process_data(data):
                        result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
 
                    """
-                   if re.search('Key exchange') and re.search('of lower strength than certificate key'):
+                   if re.search('Key exchange') and re.search('of lower strength than certificate key',script,re.IGNORECASE):
                        v_name='SSL/TLS Diffie-Hellman Modulus'
                        score=3.7
                        strng='CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N'
@@ -111,7 +111,7 @@ def process_data(data):
                        result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
                    """
 
-                   if re.search('Broken cipher RC4',script):
+                   if re.search('Broken cipher RC4',script,re.IGNORECASE):
                        v_name='SSL RC4 Cipher Suites Supported'
                        score=5.9
                        strng='CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N'
@@ -127,7 +127,7 @@ def process_data(data):
                #4
                if str(j)=='sslv2-drown':
                    #if re.search('title: OpenSSL: Cross-protocol attack on TLS using SSLv2 (DROWN)',script) and \
-                   if re.search('state: VULNERABLE',script):
+                   if re.search('state: VULNERABLE',script,re.IGNORECASE):
                        v_name='SSL DROWN Attack Vulnerability'
                        score=5.9
                        strng='CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N'
@@ -142,7 +142,7 @@ def process_data(data):
                        result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
                #5
                if str(j)=='ssl-ccs-injection':
-                   if re.search('State: VULNERABLE',script):
+                   if re.search('State: VULNERABLE',script,re.IGNORECASE):
                        v_name='SSL/TLS MITM vulnerability (CCS Injection)'
                        score=7.4
                        strng='CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:N'
@@ -158,7 +158,7 @@ def process_data(data):
 
                #5
                if str(j)=='ssl-dh-params':
-                   if re.search('State: VULNERABLE',script) and re.search('Transport Layer Security (TLS) Protocol DHE_EXPORT Ciphers Downgrade MitM (Logjam)',script):
+                   if re.search('State: VULNERABLE',script,re.IGNORECASE) and re.search('Transport Layer Security (TLS) Protocol DHE_EXPORT Ciphers Downgrade MitM (Logjam)',script,re.IGNORECASE):
                        v_name='Transport Layer Security (TLS) Protocol DHE_EXPORT Ciphers Downgrade MitM (Logjam)'
                        score=5.9
                        strng='CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N'
@@ -172,7 +172,7 @@ def process_data(data):
                        head=' [MED] TLS DHE_EXPORT Ciphers Downgrade MitM (Logjam)'.upper()
                        result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
 
-                   if re.search('State: VULNERABLE', script) and re.search('Diffie-Hellman Key Exchange Insufficient Diffie-Hellman Group Strength',script):
+                   if re.search('State: VULNERABLE', script,re.IGNORECASE) and re.search('Diffie-Hellman Key Exchange Insufficient Diffie-Hellman Group Strength',script,re.IGNORECASE):
                        v_name='Diffie-Hellman Key Exchange Insufficient Diffie-Hellman Group Strength'
                        score=4.0
                        strng='CVSS:3.0/AV:N/AC:H/Au:N/C:P/I:P/A:N'
@@ -186,7 +186,7 @@ def process_data(data):
                        head=' [MED] SSL/TLS: Diffie-Hellman Key Exchange Insufficient DH Group Strength Vulnerability'.upper()
                        result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
 
-                   if re.search('State: VULNERABLE', script) and re.search('Diffie-Hellman Key Exchange Potentially Unsafe Group Parameters',script):
+                   if re.search('State: VULNERABLE', script,re.IGNORECASE) and re.search('Diffie-Hellman Key Exchange Potentially Unsafe Group Parameters',script,re.IGNORECASE):
                        v_name='Diffie-Hellman Key Exchange Potentially Unsafe Group Parameters'
                        score=0
                        strng=''
@@ -202,7 +202,7 @@ def process_data(data):
 
                #6
                if str(j)=='ssl-heartbleed':
-                   if re.search('State: VULNERABLE', script):
+                   if re.search('State: VULNERABLE', script,re.IGNORECASE):
                        v_name="OpenSSL 'Heartbleed' vulnerability"
                        score=7.5
                        strng='CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N'
@@ -218,7 +218,7 @@ def process_data(data):
 
                #7
                if str(j)=='ssl-poodle':
-                   if re.search('State: VULNERABLE',script):
+                   if re.search('State: VULNERABLE',script,re.IGNORECASE):
                        v_name='SSLv3 Padding Oracle On Downgraded Legacy Encryption Vulnerability (POODLE)'
                        score=6.8
                        strng='CVSS:3.0/AV:N/AC:H/PR:N/UI:N/S:C/C:H/I:N/A:N'
@@ -257,7 +257,7 @@ def _sslyze():
             if x.startswith('* Certificates Information:'):
                 script=str(x).replace('##','\n')
                 
-                if re.search('Certificate does NOT match server hostname', x):
+                if re.search('Certificate does NOT match server hostname', x,re.IGNORECASE):
                     v_name = 'SSL Certificate with Wrong Hostname'
                     score = 5.3
                     strng = 'CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N'
@@ -271,7 +271,7 @@ def _sslyze():
                     head = ' [MED] SSL CERTIFICATE WITH WRONG HOSTNAME'
                     result[head] = set_data(v_name, score, strng, risk, desc, imp, sol, ref, link, port, script, '')
 
-                if re.search('self signed certificate',x):
+                if re.search('self signed certificate',x,re.IGNORECASE):
                     v_name='SSL Self-Signed Certificate'
                     score=6.8
                     strng='CVSS2#AV:N/AC:L/Au:N/C:P/I:P/A:N'
@@ -285,7 +285,7 @@ def _sslyze():
                     head=' [MED] SSL/TLS SELF-SIGNED CERTIFICATE'
                     result[head] = set_data(v_name, score, strng, risk, desc, imp, sol, ref, link, port, script, '')
 
-                if re.search('Certificate is NOT Trusted',x) or re.search('certificate untrusted',x):
+                if re.search('Certificate is NOT Trusted',x,re.IGNORECASE) or re.search('certificate untrusted',x,re.IGNORECASE):
                     v_name='SSL Certificate Cannot Be Trusted'
                     score=6.5
                     strng='CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N'
@@ -300,7 +300,7 @@ def _sslyze():
                     result[head] = set_data(v_name, score, strng, risk, desc, imp, sol, ref, link, port, script, '')
 
             if x.startswith('* OpenSSL CCS Injection:'):
-                if not re.search('Not vulnerable to OpenSSL CCS injection',x):
+                if not re.search('Not vulnerable to OpenSSL CCS injection',x,re.IGNORECASE):
                     script=str(x).replace('#','\n')
                     v_name = 'SSL/TLS MITM vulnerability (CCS Injection)'
                     score = 7.4
@@ -316,7 +316,7 @@ def _sslyze():
                     result[head] = set_data(v_name, score, strng, risk, desc, imp, sol, ref, link, port, script, '')
 
             if x.startswith('* OpenSSL Heartbleed:'):
-                if not re.search('OK - Not vulnerable to Heartbleed',x):
+                if not re.search('OK - Not vulnerable to Heartbleed',x,re.IGNORECASE):
                     script=str(x).replace('#','\n')
                     v_name = "OpenSSL 'Heartbleed' vulnerability"
                     score = 7.5
@@ -332,7 +332,7 @@ def _sslyze():
                     result[head] = set_data(v_name, score, strng, risk, desc, imp, sol, ref, link, port, script, '')
 
             if x.startswith('* Downgrade Attacks:'):
-                if not re.search('OK - Supported',x):
+                if not re.search('OK - Supported',x,re.IGNORECASE):
                     script=str(x).replace('#','\n')
                     v_name = 'SSLv3 Padding Oracle On Downgraded Legacy Encryption Vulnerability (POODLE)'
                     score = 6.8
