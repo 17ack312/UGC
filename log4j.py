@@ -22,4 +22,9 @@ response = requests.request("GET", url, headers=headers, params=querystring)
 
 res=json.loads(response.text)
 
-print(res)
+try:
+	print(res["vulnerabilities"]['cve_2021_44228'])
+except:
+	print('False')
+
+
