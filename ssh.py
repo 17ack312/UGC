@@ -11,8 +11,8 @@ host=sys.argv[1]
 
 def _scan(ip, arg):
     res = nm.scan(hosts=ip, arguments=arg)['scan']
-    #for i in res.keys():
-    #    res = res[i]
+    for i in res.keys():
+        res = res[i]
     return res
 
 
