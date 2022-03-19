@@ -146,4 +146,20 @@ def ssh_nm():
 
 ssh_nm()
 
+res = sorted(result.items(), key = lambda x: x[1]['score'],reverse=True)
+
+result={}
+for i in res:
+  x=i[0]
+  y=dict(i[1])
+  result[x]=y
+
+#print(dict(result))
+
+
+#or i in result:
+#  print(result[i])
+
+#result=(str(result).replace("'",'"'))
+
 print(json.dumps(result))
