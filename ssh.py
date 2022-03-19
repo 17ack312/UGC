@@ -42,7 +42,6 @@ def process_data(data):
            name=str(data[i]['name'])
 
            for j in (data[i]['script'].keys()):
-               print(j)
                script=data[i]['script'][j]
 
                #1              
