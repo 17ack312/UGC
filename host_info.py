@@ -1,4 +1,4 @@
-import sys
+import sys,json
 import nmap
 nm = nmap.PortScanner()
 
@@ -33,4 +33,4 @@ for i in host.split('##'):
 	if int(len(x.keys()))>0:
 		data[i]=x
 
-print(data)
+print(json.dumps(data))
