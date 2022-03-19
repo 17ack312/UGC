@@ -51,7 +51,7 @@ def prepare_data(data,flag):
                     ver=''
                 name=name+' '+prod+' '+ver
 
-                if 'open' in state:
+                if ('open' in state) or ('filtered' in state):
                     x.append(str(port+','+name))
                 y['port']=x
         print(y)
