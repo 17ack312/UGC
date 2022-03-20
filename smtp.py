@@ -87,7 +87,7 @@ def process_data(data):
 
 
 def _smpt_enum():
-    res=_scan(host,'--script=smtp-brute.nse,smtp-commands.nse,smtp-strangeport.nse,smtp-open-relay.nse --script-args="smtp-open-relay.domain=sakurity.com,smtp-open-relay.ip=127.0.0.1"  -F')
+    res=_scan(host,'--script=smtp-commands.nse,smtp-strangeport.nse,smtp-open-relay.nse --script-args="smtp-open-relay.domain=sakurity.com,smtp-open-relay.ip=127.0.0.1"  -F')
 
     if 'tcp' in res.keys():
         data=res['tcp']
