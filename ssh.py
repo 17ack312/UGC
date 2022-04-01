@@ -134,7 +134,7 @@ def process_data(data):
     
 
 def ssh_nm():
-    res=_scan(host,'--script=sshv1.nse,ssh2-enum-algos.nse,ssh-brute.nse,ssh-hostkey.nse --script-args="userdb=users.lst, passdb=pass.lst, ssh-brute.timeout=4s,ssh_hostkey=all, ssh-run.cmd=ls , ssh-run.username=admin, ssh-run.password=password" -F')
+    res=_scan(host,'-sV --script=sshv1.nse,ssh2-enum-algos.nse,ssh-brute.nse,ssh-hostkey.nse --script-args="userdb=users.lst, passdb=pass.lst, ssh-brute.timeout=4s,ssh_hostkey=all, ssh-run.cmd=ls , ssh-run.username=admin, ssh-run.password=password" -F')
 
     if 'tcp' in res.keys():
         data=res['tcp']
