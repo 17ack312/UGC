@@ -43,10 +43,6 @@ def process_data(data):
            for j in (data[i]['script'].keys()):
               script=data[i]['script'][j]
 
-              if str(j)=='smtp-brute':
-                pass
-                ##DUE
-
               if str(j)=='realvnc-auth-bypass' and re.search('VULNERABLE',script,re.IGNORECASE):
                 v_name='RealVNC 4.1.0 - 4.1.1 Authentication Bypass'
                 score=7.5
