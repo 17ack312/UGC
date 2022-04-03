@@ -80,7 +80,7 @@ def process_data(data):
                 strng='CVSS2#AV:N/AC:L/Au:N/C:N/I:P/A:N'
                 risk='Medium'
                 desc='The remote DNS server allows zone transfers.'
-                imp='If this is your internal nameserver, then the attack vector may be limited to employees or guest access if allowed.\nIf you are probing a remote nameserver, then it allows anyone to use it to resolve third party names.\nThis allows attackers to perform cache poisoning attacks against this nameserver.\nIf the host allows these recursive queries via UDP, then the host can be used to 'bounce' Denial of Service attacks against another network or system'
+                imp='If this is your internal nameserver, then the attack vector may be limited to employees or guest access if allowed.\nIf you are probing a remote nameserver, then it allows anyone to use it to resolve third party names.\nThis allows attackers to perform cache poisoning attacks against this nameserver.\nIf the host allows these recursive queries via UDP, then the host can be used to \'bounce\' Denial of Service attacks against another network or system'
                 sol='Restrict recursive queries to the hosts that should use this nameserver (such as those of the LAN connected to it).If you are using bind 8, you can do this by using the instruction \'allow-recursion\' in the \'options\' section of your named.conf.If you are using bind 9, you can define a grouping of internal addresses using the \'acl\' command.Then, within the options block, you can explicitly state:\'allow-recursion { hosts_defined_in_acl }\'If you are using another name server, consult its documentation.'
                 ref='CVE-1999-0024'
                 link='http://www.nessus.org/u?c4dcf24a'
