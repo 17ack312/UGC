@@ -46,7 +46,7 @@ def process_data(data):
 
               if str(j)=='telnet-encryption' and not re.search('Telnet server supports encryption',script,re.IGNORECASE):
                 v_name='Unencrypted Telnet Server'
-                score=
+                score=6.5
                 strng='CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N'
                 risk='Medium'
                 desc='The remote host is running a Telnet server over an unencrypted channel.The remote Telnet server transmits traffic in cleartext.'
