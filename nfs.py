@@ -61,7 +61,7 @@ def process_data(data):
   
 
 def _nfs_enum():
-    res=_scan(host,'-sV --script=telnet-encryption.nse -F')
+    res=_scan(host,'-sV -sU --script=telnet-encryption.nse -F')
 
     if 'tcp' in res.keys():
         data=res['tcp']
