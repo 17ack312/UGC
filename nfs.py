@@ -44,24 +44,24 @@ def process_data(data):
               script=data[i]['script'][j]
 
 
-              if str(j)=='telnet-encryption' and not re.search('Telnet server supports encryption',script,re.IGNORECASE):
-                v_name='Unencrypted Telnet Server'
-                score=6.5
-                strng='CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:N'
-                risk='Medium'
-                desc='The remote host is running a Telnet server over an unencrypted channel.The remote Telnet server transmits traffic in cleartext.'
-                imp='Using Telnet over an unencrypted channel is not recommended as logins, passwords, and commands are transferred in cleartext. This allows a remote, man-in-the-middle attacker to eavesdrop on a Telnet session to obtain credentials or other sensitive information and to modify traffic exchanged between a client and server.SSH is preferred over Telnet since it protects credentials from eavesdropping and can tunnel additional data streams such as an X11 session.'
-                sol='Disable the Telnet service and use SSH instead.'
-                ref=''
-                link=''
+              if str(j)=='nfs-showmount' and re.search('Telnet server supports encryption',script,re.IGNORECASE):
+                v_name='NFS Share User Mountable'
+                score=7.3
+                strng='CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:L/A:L'
+                risk='High'
+                desc='to access sensitive information from remote NFS shares without having root privileges.'
+                imp='NFS shares exported by the remote server or disclose potentially sensitive information such as a directory listing. An attacker may exploit this issue to gain read and possibly write access to files on remote host, that root privileges were not required to mount the remote shares since the source port to mount the shares was higher than 1024.'
+                sol='Configure NFS on the remote host so that only authorized hosts can mount the remote shares. The remote NFS server should prevent mount requests originating from a non-privileged port.'
+                ref='CVE-1999-0554'
+                link='https://support.datafabric.hpe.com/s/article/NFS-Security-Vulnerability-CVE-1999-0554?language=en_US'
 
-                head=' [MED] UNENCRYPTED TELNET SERVER'
+                head=' [HIGH] NFS MOUNTABLE'
                 result[head]=set_data(v_name,score,strng,risk,desc,imp,sol,ref,link,port,script,name)
 
   
 
 def _nfs_enum():
-    res=_scan(host,'-sV -sU --script=telnet-encryption.nse -F')
+    res=_scan(host,'-sV --script=nfs-showmount -F')
 
     if 'tcp' in res.keys():
         data=res['tcp']
